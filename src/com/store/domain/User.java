@@ -1,6 +1,7 @@
 package com.store.domain;
 
-import javafx.scene.chart.PieChart.Data;
+import java.util.Date;
+
 
 /**
  * 用户实体
@@ -17,7 +18,7 @@ public class User {
 	private String name;
 	private String email;
 	private String telephone;
-	private Data birthday;
+	private Date birthday;
 	private String sex;
 	private Integer state = 0;
 	private String code;
@@ -58,10 +59,10 @@ public class User {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-	public Data getBirthday() {
+	public Date getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(Data birthday) {
+	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
 	public String getSex() {

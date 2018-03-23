@@ -1,18 +1,22 @@
 package com.store.web.servlet;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
 
 import com.store.domain.User;
+import com.store.myconventer.MyConventer;
 import com.store.service.UserService;
 import com.store.service.impl.UserServiceImpl;
+import com.store.utils.MD5Utils;
 import com.store.utils.UUIDUtils;
+
 
 /**
  * 和用户相关的Servlet
@@ -49,12 +53,17 @@ public class UserServlet extends BaseServlet {
 	public String regist(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		//1.封装数据
 		User user = new User();
+		//1.0注册转换器
+		ConvertUtils.register(new MyConventer(), Date.class);
+		
 		BeanUtils.populate(user, request.getParameterMap());
 		
 		//1.1设置用户id
 		user.setUid(UUIDUtils.getId());
 		//1.2设置激活码
 		user.setCode(UUIDUtils.getCode());
+		//密码加密
+		user.setPassword(MD5Utils.md5(user.getPassword()));
 		
 		//2.调用service完成注册
 		UserService s = new UserServiceImpl();
