@@ -20,7 +20,7 @@ public class User {
 	private String telephone;
 	private Date birthday;
 	private String sex;
-	private Integer state = 0;
+	private Integer state = 0;//默认未激活：0；激活：1
 	private String code;
 	
 	public String getUid() {

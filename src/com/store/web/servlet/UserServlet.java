@@ -24,10 +24,23 @@ import com.store.utils.UUIDUtils;
 public class UserServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	
-	public String add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		System.out.println("add执行了");
+	public String active(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		//1.获取激活码
+		String code = request.getParameter("code");
 		
-		return null;
+		//2.调用service完成激活
+		UserService s = new UserServiceImpl();
+		
+		User user = s.active(code);
+		
+		
+		//3.提示信息
+		if(user == null) {
+			request.setAttribute("msg", "无此用户，请<a href='http://localhost:8080/store/user?method=registUI'>重新注册</a>");
+		}else {
+			request.setAttribute("msg", "激活成功");
+		}
+		return "/jsp/msg.jsp";
 	}
 	
 	/**
