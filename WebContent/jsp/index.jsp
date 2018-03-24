@@ -36,7 +36,7 @@
 						<c:if test="${not empty user }">
 							${user.name },你好
 							<li><a href="${pageContext.request.contextPath }">我的订单</a></li>
-							<li><a href="${pageContext.request.contextPath }">退出</a></li>
+							<li><a href="${pageContext.request.contextPath }/user?method=logout">退出</a></li>
 						</c:if>
 						<li><a href="cart.htm">购物车</a></li>
 					</ol>

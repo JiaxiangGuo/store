@@ -25,32 +25,8 @@ import com.store.utils.UUIDUtils;
 public class UserServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	
-	public String active(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		//1.获取激活码
-		String code = request.getParameter("code");
-		
-		//2.调用service完成激活
-		UserService s = new UserServiceImpl();
-		
-		User user = s.active(code);
-		
-		
-		//3.提示信息
-		if(user == null) {
-			request.setAttribute("msg", "无此用户，请<a href='http://localhost:8080/store/user?method=registUI'>重新注册</a>");
-		}else {
-			request.setAttribute("msg", "激活成功");
-		}
-		return "/jsp/msg.jsp";
-	}
-	
 	/**
 	 * 跳转到注册页面
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws ServletException
-	 * @throws IOException
 	 */
 	public String registUI(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
@@ -59,50 +35,13 @@ public class UserServlet extends BaseServlet {
 	
 	/**
 	 * 跳转到登入页面
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws ServletException
-	 * @throws IOException
 	 */
 	public String loginUI(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		return "/jsp/login.jsp";
 	}
 	
-	/**
-	 *用户登入
-	 * @param request
-	 * @param response
-	 * @throws Exception 
-	 */
-	public String login(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		//1.获取用户名和密码
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		
-		//2.获取用户
-		
-		UserService s= new UserServiceImpl();
-		User user = s.login(username);
-		
-		if(user == null) {
-			request.setAttribute("msg", "用户不存在");
-			return "/jsp/login.jsp";
-		}else {
-			if(Constant.USER_IS_ACTIVE != user.getState() && (MD5Utils.md5(password)).equals(user.getPassword())) {
-				request.setAttribute("msg", "用户未激活");
-				return "/jsp/login.jsp";
-			}else if(Constant.USER_IS_ACTIVE == user.getState() && !(MD5Utils.md5(password)).equals(user.getPassword())) {
-				request.setAttribute("msg", "用户名或密码错误");
-				return "/jsp/login.jsp";
-			}
-		}
-		
-		request.getSession().setAttribute("user", user);
-		response.sendRedirect(request.getContextPath()+"/");
-		return null;
-	}
+
 	
 	/**
 	 * 用户注册
@@ -135,4 +74,67 @@ public class UserServlet extends BaseServlet {
 		return "/jsp/msg.jsp";
 		
 	}
+	
+	/*
+	 * 用户激活
+	 */
+	public String active(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		//1.获取激活码
+		String code = request.getParameter("code");
+		
+		//2.调用service完成激活
+		UserService s = new UserServiceImpl();
+		
+		User user = s.active(code);
+		
+		
+		//3.提示信息
+		if(user == null) {
+			request.setAttribute("msg", "无此用户，请<a href='http://localhost:8080/store/user?method=registUI'>重新注册</a>");
+		}else {
+			request.setAttribute("msg", "激活成功");
+		}
+		return "/jsp/msg.jsp";
+	}
+	
+	/**
+	 *用户登入
+	 */
+	public String login(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		//1.获取用户名和密码
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		
+		//2.获取用户
+		
+		UserService s= new UserServiceImpl();
+		User user = s.login(username);
+		
+		if(user == null) {
+			request.setAttribute("msg", "用户不存在");
+			return "/jsp/login.jsp";
+		}else {
+			if(Constant.USER_IS_ACTIVE != user.getState() && (MD5Utils.md5(password)).equals(user.getPassword())) {
+				request.setAttribute("msg", "用户未激活");
+				return "/jsp/login.jsp";
+			}else if(Constant.USER_IS_ACTIVE == user.getState() && !(MD5Utils.md5(password)).equals(user.getPassword())) {
+				request.setAttribute("msg", "用户名或密码错误");
+				return "/jsp/login.jsp";
+			}
+		}
+		
+		request.getSession().setAttribute("user", user);
+		response.sendRedirect(request.getContextPath()+"/");
+		return null;
+	}
+	
+	/**
+	 * 用户退出
+	 */
+	public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		request.getSession().invalidate();
+		response.sendRedirect(request.getContextPath()+"/");
+	}
+	
 }
