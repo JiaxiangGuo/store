@@ -115,18 +115,18 @@ font {
 				<font>会员登录</font>USER LOGIN
 
 				<div>&nbsp;</div>
-<form class="form-horizontal">
+<form class="form-horizontal" action="${pageContext.request.contextPath }/user?method=login" method="post">
   
  <div class="form-group">
     <label for="username" class="col-sm-2 control-label">用户名</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="username" placeholder="请输入用户名">
+      <input type="text" class="form-control" id="username" placeholder="请输入用户名" name="username">${msg }
     </div>
   </div>
    <div class="form-group">
     <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
     <div class="col-sm-6">
-      <input type="password" class="form-control" id="inputPassword3" placeholder="请输入密码">
+      <input type="password" class="form-control" id="inputPassword3" placeholder="请输入密码" name="password">
     </div>
   </div>
    <div class="form-group">

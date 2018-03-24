@@ -22,15 +22,18 @@ public class UserDaoImpl implements UserDao {
 				user.getEmail(), user.getTelephone(), user.getBirthday(), user.getSex(),
 				user.getState(), user.getCode());
 	}
-
+	
+	/*
+	 * 查询用户
+	 */
 	@Override
-	public User getUserByCode(String code) throws SQLException {
+	public User getUser(String key, String value) throws SQLException {
 		//查询用户是否存在
 		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
 		
-		String sql = "select * from user where code=? limit 1";
+		String sql = "select * from user where "+key+"=? limit 1";
 		
-		return qr.query(sql, new BeanHandler<>(User.class), code);
+		return qr.query(sql, new BeanHandler<>(User.class), value);
 		
 	}
 

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 
+import com.store.constant.Constant;
 import com.store.domain.User;
 import com.store.myconventer.MyConventer;
 import com.store.service.UserService;
@@ -54,6 +55,53 @@ public class UserServlet extends BaseServlet {
 	public String registUI(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		return "/jsp/register.jsp";
+	}
+	
+	/**
+	 * 跳转到登入页面
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public String loginUI(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		return "/jsp/login.jsp";
+	}
+	
+	/**
+	 *用户登入
+	 * @param request
+	 * @param response
+	 * @throws Exception 
+	 */
+	public String login(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		//1.获取用户名和密码
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		
+		//2.获取用户
+		
+		UserService s= new UserServiceImpl();
+		User user = s.login(username);
+		
+		if(user == null) {
+			request.setAttribute("msg", "用户不存在");
+			return "/jsp/login.jsp";
+		}else {
+			if(Constant.USER_IS_ACTIVE != user.getState() && (MD5Utils.md5(password)).equals(user.getPassword())) {
+				request.setAttribute("msg", "用户未激活");
+				return "/jsp/login.jsp";
+			}else if(Constant.USER_IS_ACTIVE == user.getState() && !(MD5Utils.md5(password)).equals(user.getPassword())) {
+				request.setAttribute("msg", "用户名或密码错误");
+				return "/jsp/login.jsp";
+			}
+		}
+		
+		request.getSession().setAttribute("user", user);
+		response.sendRedirect(request.getContextPath()+"/");
+		return null;
 	}
 	
 	/**

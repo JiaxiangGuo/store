@@ -8,7 +8,7 @@ public interface UserDao {
 
 	void add(User user) throws Exception;
 
-	User getUserByCode(String code) throws Exception;
+	User getUser(String key, String value) throws Exception;
 
 	void update(User user) throws SQLException;
 
