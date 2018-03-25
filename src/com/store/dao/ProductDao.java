@@ -10,4 +10,6 @@ public interface ProductDao {
 
 	List<Product> getHotProduct() throws Exception;
 
+	Product getById(String pid)throws Exception;
+
 }

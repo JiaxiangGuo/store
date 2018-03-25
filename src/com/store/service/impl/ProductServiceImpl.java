@@ -22,5 +22,11 @@ public class ProductServiceImpl implements ProductService {
 		ProductDao pdao =new ProductDaoImpl();
 		return pdao.getHotProduct();
 	}
+	//通过id获取商品
+	@Override
+	public Product getById(String pid) throws Exception {
+		ProductDao pdao = new ProductDaoImpl();
+		return pdao.getById(pid);
+	}
 
 }

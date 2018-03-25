@@ -3,6 +3,7 @@ package com.store.dao.impl;
 import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.store.dao.ProductDao;
@@ -29,6 +30,15 @@ public class ProductDaoImpl implements ProductDao {
 		String sql = "select * from product where is_hot=1 order by pdate limit 9";
 		
 		return qr.query(sql, new BeanListHandler<>(Product.class));
+	}
+	//通过id获取商品
+	@Override
+	public Product getById(String pid) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		
+		String sql = "select * from product where pid=?";
+		
+		return qr.query(sql, new BeanHandler<>(Product.class), pid);
 	}
 
 }
