@@ -12,4 +12,8 @@ public interface ProductDao {
 
 	Product getById(String pid)throws Exception;
 
+	List<Product> findByPage(String cid, int currentPage, int pageSize) throws Exception;
+
+	int getTotalCount(String cid) throws Exception;
+
 }

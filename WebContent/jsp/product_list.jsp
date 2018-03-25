@@ -39,117 +39,63 @@
 					<li><a href="#">首页</a></li>
 				</ol>
 			</div>
-
+		<c:forEach items="${pb.list }" var="p">
 			<div class="col-md-2">
-				<a href="product_info.htm">
-					<img src="${pageContext.request.contextPath}/products/1/cs10001.jpg" width="170" height="170" style="display: inline-block;">
+				<a href="${pageContext.request.contextPath}/product?method=getById&pid=${p.pid}">
+					<img src="${pageContext.request.contextPath}/${p.pimage }" width="170" height="170" style="display: inline-block;">
 				</a>
-				<p><a href="product_info.html" style='color:green'>冬瓜</a></p>
-				<p><font color="#FF0000">商城价：&yen;299.00</font></p>
+				<p><a href="product_info.html" style='color:green'>${p.pname }</a></p>
+				<p><font color="#FF0000">商城价：&yen;${p.shop_price }</font></p>
 			</div>
-
-			<div class="col-md-2">
-				<a href="product_info.htm">
-					<img src="${pageContext.request.contextPath}/products/1/cs10002.jpg" width="170" height="170" style="display: inline-block;">
-				</a>
-				<p><a href="product_info.html" style='color:green'>圆白菜</a></p>
-				<p><font color="#FF0000">商城价：&yen;299.00</font></p>
-			</div>
-
-			<div class="col-md-2">
-				<a href="product_info.htm">
-					<img src="${pageContext.request.contextPath}/products/1/cs10003.jpg" width="170" height="170" style="display: inline-block;">
-				</a>
-				<p><a href="product_info.html" style='color:green'>甜玉米</a></p>
-				<p><font color="#FF0000">商城价：&yen;299.00</font></p>
-			</div>
-
-			<div class="col-md-2">
-				<a href="product_info.htm">
-					<img src="${pageContext.request.contextPath}/products/1/cs10004.jpg" width="170" height="170" style="display: inline-block;">
-				</a>
-				<p><a href="product_info.html" style='color:green'>胡萝卜</a></p>
-				<p><font color="#FF0000">商城价：&yen;299.00</font></p>
-			</div>
-			<div class="col-md-2">
-				<a href="product_info.htm">
-					<img src="${pageContext.request.contextPath}/products/1/cs10005.jpg" width="170" height="170" style="display: inline-block;">
-				</a>
-				<p><a href="product_info.html" style='color:green'>芹菜</a></p>
-				<p><font color="#FF0000">商城价：&yen;299.00</font></p>
-			</div>
-
-			<div class="col-md-2">
-				<a href="product_info.htm">
-					<img src="${pageContext.request.contextPath}/products/1/cs10006.jpg" width="170" height="170" style="display: inline-block;">
-				</a>
-				<p><a href="product_info.html" style='color:green'>韭菜</a></p>
-				<p><font color="#FF0000">商城价：&yen;299.00</font></p>
-			</div>
-
-			<div class="col-md-2">
-				<a href="product_info.htm">
-					<img src="${pageContext.request.contextPath}/products/1/cs10007.jpg" width="170" height="170" style="display: inline-block;">
-				</a>
-				<p><a href="product_info.html" style='color:green'>香菜</a></p>
-				<p><font color="#FF0000">商城价：&yen;299.00</font></p>
-			</div>
-			<div class="col-md-2">
-				<a href="product_info.htm">
-					<img src="${pageContext.request.contextPath}/products/1/cs10008.jpg" width="170" height="170" style="display: inline-block;">
-				</a>
-				<p><a href="product_info.html" style='color:green'>土豆</a></p>
-				<p><font color="#FF0000">商城价：&yen;299.00</font></p>
-			</div>
-			<div class="col-md-2">
-				<a href="product_info.htm">
-					<img src="${pageContext.request.contextPath}/products/1/cs10007.jpg" width="170" height="170" style="display: inline-block;">
-				</a>
-				<p><a href="product_info.html" style='color:green'>香菜</a></p>
-				<p><font color="#FF0000">商城价：&yen;299.00</font></p>
-			</div>
-			<div class="col-md-2">
-				<a href="product_info.htm">
-					<img src="${pageContext.request.contextPath}/products/1/cs10008.jpg" width="170" height="170" style="display: inline-block;">
-				</a>
-				<p><a href="product_info.html" style='color:green'>土豆</a></p>
-				<p><font color="#FF0000">商城价：&yen;299.00</font></p>
-			</div>
-			<div class="col-md-2">
-				<a href="product_info.htm">
-					<img src="${pageContext.request.contextPath}/products/1/cs10007.jpg" width="170" height="170" style="display: inline-block;">
-				</a>
-				<p><a href="product_info.html" style='color:green'>香菜</a></p>
-				<p><font color="#FF0000">商城价：&yen;299.00</font></p>
-			</div>
-			<div class="col-md-2">
-				<a href="product_info.htm">
-					<img src="${pageContext.request.contextPath}/products/1/cs10008.jpg" width="170" height="170" style="display: inline-block;">
-				</a>
-				<p><a href="product_info.html" style='color:green'>土豆</a></p>
-				<p><font color="#FF0000">商城价：&yen;299.00</font></p>
-			</div>
+		</c:forEach>
 
 		</div>
 
 		<!--分页 -->
 		<div style="width:380px;margin:0 auto;margin-top:50px;">
 			<ul class="pagination" style="text-align:center; margin-top:10px;">
-				<li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-				<li class="active"><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">6</a></li>
-				<li><a href="#">7</a></li>
-				<li><a href="#">8</a></li>
-				<li><a href="#">9</a></li>
-				<li>
-					<a href="#" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-					</a>
-				</li>
+				<!-- 返回首页 -->
+				<c:if test="${pb.currentPage == 1}">
+					<li class="disabled"><a href="javaScript:void(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+				</c:if>
+				<c:if test="${pb.currentPage != 1} ">
+					<li><a href="${pageContext.request.contextPath}/product?method=findByPage&cid=${param.cid }&currentPage=1" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+				</c:if>
+				<!-- 显示所有页码 -->
+				<!--<c:forEach begin="1" end="${pb.totalPage }" var="n">
+					<c:if test="${pb.currentPage==n }">
+						<li class="active"><a href="javaScript:void(0)">${n }</a></li>
+					</c:if>
+					<c:if test="${pb.currentPage!=n } ">
+						<li><a href="${pageContext.request.contextPath}/product?method=findByPage&cid=${param.cid }&currentPage=${n }">${n }</a></li>
+					</c:if>
+				</c:forEach>-->
+				<!-- 展示所有页码  -->
+				<c:forEach begin="${pb.currentPage-5>0?pb.currentPage-5:1 }" end="${pb.currentPage+4>pb.totalPage?pb.totalPage:pb.currentPage+4 }" var="n">
+					<!-- 判断是否是当前页 -->
+					<c:if test="${pb.currentPage==n }">
+						<li class="active"><a href="javascript:void(0)">${n }</a></li>
+					</c:if>
+					<c:if test="${pb.currentPage!=n }">
+						<li><a href="${pageContext.request.contextPath}/product?method=findByPage&currentPage=${n}&cid=${param.cid}">${n }</a></li>
+					</c:if>
+				</c:forEach>
+				-
+				<!-- 最后一页 -->
+				<c:if test="${pb.totalPage != pb.currentPage}">
+					<li>
+						<a href="${pageContext.request.contextPath}/product?method=findByPage&cid=${param.cid }&currentPage=${pb.totalPage }" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</c:if>
+				<c:if test="${pb.totalPage == pb.currentPage }">
+					<li class="disabled">
+						<a href="javaScript:void(0)" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</c:if>
 			</ul>
 		</div>
 		<!-- 分页结束=======================        -->
