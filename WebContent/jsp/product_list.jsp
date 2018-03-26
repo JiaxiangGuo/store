@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array"%>
+<%@page import="com.store.utils.CookUtils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
@@ -44,7 +47,7 @@
 				<a href="${pageContext.request.contextPath}/product?method=getById&pid=${p.pid}">
 					<img src="${pageContext.request.contextPath}/${p.pimage }" width="170" height="170" style="display: inline-block;">
 				</a>
-				<p><a href="product_info.html" style='color:green'>${p.pname }</a></p>
+				<p><a href="${pageContext.request.contextPath}/product?method=getById&pid=${p.pid}" style='color:green'>${p.pname }</a></p>
 				<p><font color="#FF0000">商城价：&yen;${p.shop_price }</font></p>
 			</div>
 		</c:forEach>
@@ -54,22 +57,14 @@
 		<!--分页 -->
 		<div style="width:380px;margin:0 auto;margin-top:50px;">
 			<ul class="pagination" style="text-align:center; margin-top:10px;">
-				<!-- 返回首页 -->
+				<!-- 上一页 -->
 				<c:if test="${pb.currentPage == 1}">
 					<li class="disabled"><a href="javaScript:void(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 				</c:if>
-				<c:if test="${pb.currentPage != 1} ">
-					<li><a href="${pageContext.request.contextPath}/product?method=findByPage&cid=${param.cid }&currentPage=1" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+				<c:if test="${pb.currentPage != 1}">
+					<li><a href="${pageContext.request.contextPath}/product?method=findByPage&cid=${param.cid }&currentPage=${pb.currentPage-1}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 				</c:if>
-				<!-- 显示所有页码 -->
-				<!--<c:forEach begin="1" end="${pb.totalPage }" var="n">
-					<c:if test="${pb.currentPage==n }">
-						<li class="active"><a href="javaScript:void(0)">${n }</a></li>
-					</c:if>
-					<c:if test="${pb.currentPage!=n } ">
-						<li><a href="${pageContext.request.contextPath}/product?method=findByPage&cid=${param.cid }&currentPage=${n }">${n }</a></li>
-					</c:if>
-				</c:forEach>-->
+			
 				<!-- 展示所有页码  -->
 				<c:forEach begin="${pb.currentPage-5>0?pb.currentPage-5:1 }" end="${pb.currentPage+4>pb.totalPage?pb.totalPage:pb.currentPage+4 }" var="n">
 					<!-- 判断是否是当前页 -->
@@ -80,11 +75,11 @@
 						<li><a href="${pageContext.request.contextPath}/product?method=findByPage&currentPage=${n}&cid=${param.cid}">${n }</a></li>
 					</c:if>
 				</c:forEach>
-				-
-				<!-- 最后一页 -->
+
+				<!-- 下一页-->
 				<c:if test="${pb.totalPage != pb.currentPage}">
 					<li>
-						<a href="${pageContext.request.contextPath}/product?method=findByPage&cid=${param.cid }&currentPage=${pb.totalPage }" aria-label="Next">
+						<a href="${pageContext.request.contextPath}/product?method=findByPage&cid=${param.cid }&currentPage=${pb.currentPage+1}" aria-label="Next">
 							<span aria-hidden="true">&raquo;</span>
 						</a>
 					</li>
@@ -108,13 +103,32 @@
 			<h4 style="width: 50%;float: left;font: 14px/30px " 微软雅黑 ";">浏览记录</h4>
 			<div style="width: 50%;float: right;text-align: right;"><a href="">more</a></div>
 			<div style="clear: both;"></div>
-
+			
 			<div style="overflow: hidden;">
-
 				<ul style="list-style: none;">
-					<li style="width: 150px;height: 216;float: left;margin: 0 8px 0 0;padding: 0 18px 15px;text-align: center;"><img src="${pageContext.request.contextPath}/products/1/cs10001.jpg" width="130px" height="130px" /></li>
+				<%
+				Cookie c = CookUtils.getCookieByName("ids", request.getCookies());
+				if(c == null){
+				%>
+				<h1>暂时没有浏览记录</h1>
+				<%
+				}else{
+					String[] ids= c.getValue().split("-");
+					for(String pid:ids){
+						
+				%>
+					<a href="${pageContext.request.contextPath}/product?method=getById&pid=<%=pid %>">
+					<%
+					pid = "000" + pid;
+					pid = pid.substring(pid.length()-4, pid.length());
+					%>
+						<li style="width: 150px;height: 216;float: left;margin: 0 8px 0 0;padding: 0 18px 15px;text-align: center;"><img src="${pageContext.request.contextPath }/products/1/c_<%=pid %>.jpg" width="130px" height="130px" /></li>
+					</a>
+				<%
+					}
+				}
+				%>	
 				</ul>
-
 			</div>
 		</div>
 		<div style="margin-top:50px;">
