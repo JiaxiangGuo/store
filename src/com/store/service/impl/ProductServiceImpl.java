@@ -7,32 +7,33 @@ import com.store.dao.impl.ProductDaoImpl;
 import com.store.domain.PageBean;
 import com.store.domain.Product;
 import com.store.service.ProductService;
+import com.store.utils.BeanFactory;
 
 public class ProductServiceImpl implements ProductService {
 	
 	//查询最新商品
 	@Override
 	public List<Product> getNewProduct() throws Exception {
-		ProductDao pdao =new ProductDaoImpl();
+		ProductDao pdao =(ProductDao) new BeanFactory().getBean("ProductDao");
 		return pdao.getNewProduct();
 	}
 
 	//查询热门商品
 	@Override
 	public List<Product> getHotProduct() throws Exception {
-		ProductDao pdao =new ProductDaoImpl();
+		ProductDao pdao =(ProductDao) new BeanFactory().getBean("ProductDao");
 		return pdao.getHotProduct();
 	}
 	//通过id获取商品
 	@Override
 	public Product getById(String pid) throws Exception {
-		ProductDao pdao = new ProductDaoImpl();
+		ProductDao pdao = (ProductDao) new BeanFactory().getBean("ProductDao");
 		return pdao.getById(pid);
 	}
 	//查询分类商品
 	@Override
 	public PageBean findByPage(String cid, int currentPage, int pageSize) throws Exception {
-		ProductDao pdao = new ProductDaoImpl();
+		ProductDao pdao = (ProductDao) new BeanFactory().getBean("ProductDao");
 		//获得商品列表
 		List<Product> plist = pdao.findByPage(cid, currentPage, pageSize);
 		//获得总条数

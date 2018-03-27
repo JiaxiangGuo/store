@@ -15,6 +15,7 @@ import com.store.domain.PageBean;
 import com.store.domain.Product;
 import com.store.service.ProductService;
 import com.store.service.impl.ProductServiceImpl;
+import com.store.utils.BeanFactory;
 import com.store.utils.CookUtils;
 
 /**
@@ -30,7 +31,7 @@ public class ProductServlet extends BaseServlet {
 		//获取商品id
 		String pid = request.getParameter("pid");
 		//通过id获取商品
-		ProductService ps = new ProductServiceImpl();
+		ProductService ps = (ProductService) new BeanFactory().getBean("ProductService");
 		Product p = ps.getById(pid);
 		//将商品写回网页
 		request.setAttribute("p", p);
@@ -84,7 +85,7 @@ public class ProductServlet extends BaseServlet {
 		//设置每页展示商品条数
 		int pageSize = 6;
 		//通过id获取商品
-		ProductService ps = new ProductServiceImpl();
+		ProductService ps = (ProductService) new BeanFactory().getBean("ProductService");
 		PageBean pb = ps.findByPage(cid, currentPage, pageSize);
 		//将商品写回网页
 		request.setAttribute("pb", pb);

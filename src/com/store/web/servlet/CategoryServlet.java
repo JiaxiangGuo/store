@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.store.domain.Category;
 import com.store.service.CategoryService;
-import com.store.service.impl.CategaryServiceImpl;
+import com.store.service.impl.CategoryServiceImpl;
+import com.store.utils.BeanFactory;
 import com.store.utils.JsonUtil;
 
 /**
@@ -17,7 +18,7 @@ public class CategoryServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	public String findAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//1.调用CategoryService查询所有的分类，返回值list
-		CategoryService cs = new CategaryServiceImpl();
+		CategoryService cs = (CategoryService) new BeanFactory().getBean("CategoryService");
 		
 		List<Category> clist = cs.findAll();
 		

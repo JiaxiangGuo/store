@@ -15,6 +15,7 @@ import com.store.domain.User;
 import com.store.myconventer.MyConventer;
 import com.store.service.UserService;
 import com.store.service.impl.UserServiceImpl;
+import com.store.utils.BeanFactory;
 import com.store.utils.MD5Utils;
 import com.store.utils.UUIDUtils;
 
@@ -83,7 +84,7 @@ public class UserServlet extends BaseServlet {
 		String code = request.getParameter("code");
 		
 		//2.调用service完成激活
-		UserService s = new UserServiceImpl();
+		UserService s = (UserService) new BeanFactory().getBean("UserService");
 		
 		User user = s.active(code);
 		

@@ -1,10 +1,12 @@
 package com.store.service.impl;
 
 import com.store.constant.Constant;
+import com.store.dao.ProductDao;
 import com.store.dao.UserDao;
 import com.store.dao.impl.UserDaoImpl;
 import com.store.domain.User;
 import com.store.service.UserService;
+import com.store.utils.BeanFactory;
 import com.store.utils.MailUtils;
 
 public class UserServiceImpl implements UserService {
@@ -14,7 +16,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public void regist(User user) throws Exception{
-		UserDao dao = new UserDaoImpl();
+		UserDao dao = (UserDao) new BeanFactory().getBean("UserDao");
 		dao.add(user);
 		//发送邮件
 		//emailMsg邮件内容
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public User active(String code) throws Exception {
-		UserDao dao = new UserDaoImpl();
+		UserDao dao = (UserDao) new BeanFactory().getBean("UserDao");
 		User user = dao.getUser("code", code);
 		
 		if(user == null) {
@@ -46,7 +48,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User login(String username) throws Exception {
 		//调用dao查询用户
-		UserDao dao = new UserDaoImpl();
+		UserDao dao = (UserDao) new BeanFactory().getBean("UserDao");
 		return dao.getUser("username", username);
 	
 	}
