@@ -26,7 +26,7 @@
 				<li><a
 					href="${pageContext.request.contextPath }/user?method=logout">退出</a></li>
 			</c:if>
-			<li><a href="cart.htm">购物车</a></li>
+			<li><a href="${pageContext.request.contextPath }/jsp/cart.jsp">购物车</a></li>
 		</ol>
 	</div>
 </div>
