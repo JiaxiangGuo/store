@@ -27,7 +27,7 @@ public class Cart implements Serializable{
 	//从购物车删除
 	public void removeFromCart(String id){
 		CartItem item = map.remove(id);	
-		total += item.getSubtotal();
+		total -= item.getSubtotal();
 	}
 	
 	//清空购物车

@@ -81,7 +81,7 @@
 										<span class="subtotal">${item.subtotal }</span>
 									</td>
 									<td>
-										<a href="javascript:;" class="delete">删除</a>
+										<a href="${pageContext.request.contextPath }/cart?method=remove&pid=${item.product.pid }" class="delete">删除</a>
 									</td>
 								</tr>
 							</c:forEach>

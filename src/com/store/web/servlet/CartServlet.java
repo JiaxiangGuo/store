@@ -48,4 +48,12 @@ public class CartServlet extends BaseServlet {
 		response.sendRedirect(request.getContextPath()+"/jsp/cart.jsp");
 		return null;
 	}
+	
+	//从购物车中删除
+	public String remove(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		Cart cart = (Cart) request.getSession().getValue("cart");
+		cart.removeFromCart(request.getParameter("pid"));
+		response.sendRedirect(request.getContextPath()+"/jsp/cart.jsp");
+		return null;
+	}
 }
