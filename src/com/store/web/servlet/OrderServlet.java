@@ -12,6 +12,7 @@ import com.store.domain.Cart;
 import com.store.domain.CartItem;
 import com.store.domain.Order;
 import com.store.domain.OrderItem;
+import com.store.domain.OrderPage;
 import com.store.domain.User;
 import com.store.service.OrderService;
 import com.store.utils.BeanFactory;
@@ -61,5 +62,26 @@ public class OrderServlet extends BaseServlet {
 		
 		return "/jsp/order_info.jsp"; 
 	}
-
+	//分页查询订单
+	public String findAllPage(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		//1.判断用户是否登录
+		User user = (User) request.getSession().getAttribute("user");
+		if(user == null) {
+			return "/jsp/login.jsp";
+		}
+		//获取用户id
+		String uid = user.getUid();
+		//获取当前页
+		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		//设置每页订单数量
+		int pageSize = 3;
+		//调用orderorderservice查询当前页订单，返回pagebean
+		OrderService os = (OrderService) new BeanFactory().getBean("OrderService");
+		OrderPage orderpage = os.findByPage(uid, currentPage, pageSize);
+		
+		request.setAttribute("orderpage", orderpage);
+		
+		
+		return "/jsp/order_list.jsp";
+	}
 }
