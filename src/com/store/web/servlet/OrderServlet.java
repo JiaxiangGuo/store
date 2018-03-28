@@ -84,4 +84,13 @@ public class OrderServlet extends BaseServlet {
 		
 		return "/jsp/order_list.jsp";
 	}
+	//查询订单详情
+	public String getById(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		OrderService os = (OrderService) new BeanFactory().getBean("OrderService");
+		Order order = os.getById(request.getParameter("oid"));
+		
+		request.setAttribute("order", order);
+		
+		return "/jsp/order_info.jsp";
+	}
 }

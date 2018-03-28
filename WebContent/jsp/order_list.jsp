@@ -44,7 +44,20 @@
 						<c:forEach items="${orderpage.list }" var="order">
 							<tbody>
 								<tr class="success">
-									<th colspan="5">订单编号:${order.oid } </th>
+									<th colspan="5">订单编号:${order.oid } &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订单金额:${order.total }
+										<c:if test="${order.state==0 }">
+											<a href="${pageContext.request.contextPath }/order?method=getById&oid=${order.oid}">付款</a>
+										</c:if>
+										<c:if test="${order.state==1 }">
+											<a href="#">查看物流</a>
+										</c:if>
+										<c:if test="${order.state==2 }">
+											<a href="#">确认收货</a>
+										</c:if>
+										<c:if test="${order.state==3 }">
+											已完成
+										</c:if>
+									</th>
 								</tr>
 								<tr class="warning">
 									<th>图片</th>

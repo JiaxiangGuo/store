@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -41,23 +42,23 @@ public class OrderDaoImpl implements OrderDao {
 	public List<Order> findBypage(String uid, int currentPage, int pageSize) throws Exception {
 		//查询当前页订单
 		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
-		String sql = "select * from orders where uid = ? limit ?,?";
+		String sql = "select * from orders where uid = ? order by state asc,ordertime desc limit ?,?";
 		List<Order> list = qr.query(sql, new BeanListHandler<>(Order.class), uid, (currentPage-1)*pageSize, pageSize);
 		
 		sql = "select * from orderitem oi,product p where oi.pid=p.pid and oid=?";
-		
+		//获取订单列表
 		for (Order order : list) {
 			String oid = order.getOid();
 			List<Map<String, Object>> list2 = qr.query(sql, new MapListHandler(), oid);
 			for (Map<String, Object> map : list2) {
+				//封装商品信息
 				Product p = new Product();
 				BeanUtils.populate(p, map);
-				
+				//封装订单项信息
 				OrderItem oi = new OrderItem();
 				BeanUtils.populate(oi, map);
-				
 				oi.setProduct(p);
-				
+				//将订单项放入订单
 				order.getItems().add(oi);
 			}
 		}
@@ -70,6 +71,30 @@ public class OrderDaoImpl implements OrderDao {
 		String sql = "select count(*) from orders where uid=?";
 		
 		return ((Long)qr.query(sql, new ScalarHandler(), uid)).intValue();
+	}
+	//通过id查询订单
+	@Override
+	public Order getById(String oid) throws Exception {
+		
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "select * from orders where oid=?";
+		Order order = qr.query(sql, new BeanHandler<>(Order.class), oid);
+		
+		sql = "select * from orderitem oi,product p where oi.pid=p.pid and oi.oid=?";
+		List<Map<String, Object>> list = qr.query(sql, new MapListHandler(), oid);
+		
+		for (Map<String, Object> map : list) {
+			
+			Product p = new Product();
+			BeanUtils.populate(p, map);
+			
+			OrderItem oi = new OrderItem();
+			BeanUtils.populate(oi, map);
+			oi.setProduct(p);
+			order.getItems().add(oi);
+				
+		}
+		return order;
 	}
 
 }

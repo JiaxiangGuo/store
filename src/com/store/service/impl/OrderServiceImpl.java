@@ -46,5 +46,11 @@ public class OrderServiceImpl implements OrderService {
 		int totalCount = orderdao.findTotalCount(uid);
 		return new OrderPage(currentPage, pageSize, list, totalCount);
 	}
+	//通过id查询订单
+	@Override
+	public Order getById(String oid) throws Exception {
+		OrderDao od = (OrderDao) new BeanFactory().getBean("OrderDao");
+		return od.getById(oid);
+	}
 
 }

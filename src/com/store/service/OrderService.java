@@ -9,4 +9,6 @@ public interface OrderService {
 
 	OrderPage findByPage(String uid, int currentPage, int pageSize) throws Exception;
 
+	Order getById(String parameter) throws Exception;
+
 }
