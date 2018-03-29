@@ -16,4 +16,6 @@ public interface ProductDao {
 
 	int getTotalCount(String cid) throws Exception;
 
+	List<Product> findAll() throws Exception;
+
 }

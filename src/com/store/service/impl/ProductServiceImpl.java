@@ -41,5 +41,11 @@ public class ProductServiceImpl implements ProductService {
 		//返回封装好的pageBean
 		return new PageBean(plist, currentPage, pageSize, totalPage);
 	}
+	//
+	@Override
+	public List<Product> findAll() throws Exception {
+		ProductDao pdao = (ProductDao) new BeanFactory().getBean("ProductDao");
+		return pdao.findAll();
+	}
 
 }

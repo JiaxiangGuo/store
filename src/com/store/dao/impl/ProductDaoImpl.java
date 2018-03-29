@@ -56,4 +56,11 @@ public class ProductDaoImpl implements ProductDao {
 		return ((Long)qr.query(sql,new ScalarHandler(), cid)).intValue();
 	}
 
+	@Override
+	public List<Product> findAll() throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "select * from product";
+		return qr.query(sql, new BeanListHandler<>(Product.class));
+	}
+
 }
