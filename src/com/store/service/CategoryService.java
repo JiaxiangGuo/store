@@ -10,4 +10,10 @@ public interface CategoryService {
 
 	void add(Category category) throws Exception;
 
+	Category getById(String cid) throws Exception;
+
+	void update(String cid, String cname) throws Exception;
+
+	void delete(String cid) throws Exception;
+
 }

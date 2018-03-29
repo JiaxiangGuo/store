@@ -44,7 +44,37 @@ public class CategoryServiceImpl implements CategoryService{
 	public void add(Category category) throws Exception {
 		CategoryDao cd = (CategoryDao) new BeanFactory().getBean("CategoryDao");
 		cd.add(category);
+		//清空缓存
+		CacheManager cm = CacheManager.create(CategoryDaoImpl.class.getClassLoader().getResourceAsStream("ehcache.xml"));
+		Cache cache = cm.getCache("categoryCache");
+		cache.remove("clist");
+	}
+	//通过id获取分类
+	@Override
+	public Category getById(String cid) throws Exception {
+		CategoryDao cd = (CategoryDao) new BeanFactory().getBean("CategoryDao");
+		return cd.getById(cid);
+	}
+	//更新分类
+	@Override
+	public void update(String cid, String cname) throws Exception {
+		CategoryDao cd = (CategoryDao) new BeanFactory().getBean("CategoryDao");
+		cd.update(cid, cname);
 		
+		//清空缓存
+		CacheManager cm = CacheManager.create(CategoryDaoImpl.class.getClassLoader().getResourceAsStream("ehcache.xml"));
+		Cache cache = cm.getCache("categoryCache");
+		cache.remove("clist");
+	}
+	@Override
+	public void delete(String cid) throws Exception {
+		CategoryDao cd = (CategoryDao) new BeanFactory().getBean("CategoryDao");
+		cd.delete(cid);
+		
+		//清空缓存
+		CacheManager cm = CacheManager.create(CategoryDaoImpl.class.getClassLoader().getResourceAsStream("ehcache.xml"));
+		Cache cache = cm.getCache("categoryCache");
+		cache.remove("clist");
 	}
 
 }
