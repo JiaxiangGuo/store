@@ -22,5 +22,12 @@ public class CategoryDaoImpl implements CategoryDao {
 		
 		return qr.query(sql, new BeanListHandler<>(Category.class));
 	}
+	//添加新分类
+	@Override
+	public void add(Category category) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "insert into category values (?,?)";
+		qr.update(sql, category.getCid(), category.getCname());
+	}
 
 }

@@ -39,5 +39,12 @@ public class CategoryServiceImpl implements CategoryService{
 		return list;
 		//return (List<Category>) element.getObjectValue(); 出现空指针异常
 	}
+	//添加新分类
+	@Override
+	public void add(Category category) throws Exception {
+		CategoryDao cd = (CategoryDao) new BeanFactory().getBean("CategoryDao");
+		cd.add(category);
+		
+	}
 
 }

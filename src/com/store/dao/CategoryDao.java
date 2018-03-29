@@ -9,4 +9,6 @@ public interface CategoryDao {
 
 	List<Category> findAll() throws Exception;
 
+	void add(Category category) throws Exception;
+
 }

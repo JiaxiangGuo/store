@@ -8,7 +8,7 @@
 		<script language="javascript" src="${pageContext.request.contextPath}/js/public.js"></script>
 		<script type="text/javascript">
 			function addCategory(){
-				window.location.href = "${pageContext.request.contextPath}/";
+				window.location.href = "${pageContext.request.contextPath}/adminCategory?method=addUI";
 			}
 		</script>
 	</HEAD>
@@ -50,19 +50,19 @@
 										删除
 									</td>
 								</tr>
-								<c:forEach var="c" items="${ list }">
+								<c:forEach var="c" items="${list }">
 										<tr onmouseover="this.style.backgroundColor = 'white'"
 											onmouseout="this.style.backgroundColor = '#F5FAFE';">
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="18%">
-												
+												${c.cid }
 											</td>
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="17%">
-												
+												${c.cname }
 											</td>
 											<td align="center" style="HEIGHT: 22px">
-												<a href="${ pageContext.request.contextPath }/adminCategory">
+												<a href="${pageContext.request.contextPath }/adminCategory">
 													<img src="${pageContext.request.contextPath}/images/i_edit.gif" border="0" style="CURSOR: hand">
 												</a>
 											</td>
