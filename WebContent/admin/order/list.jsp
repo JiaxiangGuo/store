@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <HTML>
 	<HEAD>
 		<meta http-equiv="Content-Language" content="zh-cn">
@@ -91,64 +92,64 @@
 										订单详情
 									</td>
 								</tr>
-									<s:iterator var="o" value="pageBean.list" status="status">
+									<c:forEach items="${orderPage.list }" var="order" varStatus="vs">
 										<tr onmouseover="this.style.backgroundColor = 'white'"
 											onmouseout="this.style.backgroundColor = '#F5FAFE';">
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="18%">
-												<s:property value="#status.count"/>
+												${vs.count }
 											</td>
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="17%">
-												<s:property value="#o.oid"/>
+												${order.oid }
 											</td>
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="17%">
-												<s:property value="#o.total"/>
+												${order.total }
 											</td>
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="17%">
-												<s:property value="#o.name"/>
+												${order.name }
 											</td>
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="17%">
-												<s:if test="#o.state==1">
+												<c:if test="${order.state == 0 }">
 													未付款
-												</s:if>
-												<s:if test="#o.state==2">
+												</c:if>
+												<c:if test="${order.state == 1 }">
 													<a href="${ pageContext.request.contextPath }/adminOrder_updateState.action?oid=<s:property value="#o.oid"/>"><font color="blue">发货</font></a>
-												</s:if>
-												<s:if test="#o.state==3">
+												</c:if>
+												<c:if test="${order.state == 2 }">
 													等待确认收货
-												</s:if>
-												<s:if test="#o.state==4">
+												</c:if>
+												<c:if test="${order.state == 3 }">
 													订单完成
-												</s:if>
+												</c:if>
 											
 											</td>
 											<td align="center" style="HEIGHT: 22px">
-												<input type="button" value="订单详情" id="but<s:property value="#o.oid"/>" onclick="showDetail(<s:property value="#o.oid"/>)"/>
-												<div id="div<s:property value="#o.oid"/>">
+												<input type="button" value="订单详情" id="but${order.oid }" onclick="showDetail(${order.oid })"/>
+												<div id="div${order.oid }">
 													
 												</div>
 											</td>
 							
 										</tr>
-									</s:iterator>	
+									</c:forEach>	
 							</table>
 						</td>
 					</tr>
 					<tr align="center">
 						<td colspan="7">
-							第<s:property value="pageBean.page"/>/<s:property value="pageBean.totalPage"/>页 
-							<s:if test="pageBean.page != 1">
-								<a href="${ pageContext.request.contextPath }/adminOrder_findAll.action?page=1">首页</a>|
-								<a href="${ pageContext.request.contextPath }/adminOrder_findAll.action?page=<s:property value="pageBean.page-1"/>">上一页</a>|
-							</s:if>
-							<s:if test="pageBean.page != pageBean.totalPage">
-								<a href="${ pageContext.request.contextPath }/adminOrder_findAll.action?page=<s:property value="pageBean.page+1"/>">下一页</a>|
-								<a href="${ pageContext.request.contextPath }/adminOrder_findAll.action?page=<s:property value="pageBean.totalPage"/>">尾页</a>|
-							</s:if>
+							第${orderPage.currentPage }/${orderPage.totalPage }页 
+							<c:if test="${orderPage.currentPage != 1 }">
+								<a href="${ pageContext.request.contextPath }/adminOrder?method=findAllByState&state=${orderPage.list[0].state }&currentPage=1">首页</a>|
+								<a href="${ pageContext.request.contextPath }/adminOrder?method=findAllByState&state=${orderPage.list[0].state }&currentPage=${orderPage.currentPage-1 }">上一页</a>|
+							</c:if>
+							<c:if test="${orderPage.currentPage != orderPafe.totalPage }">
+								<a href="${ pageContext.request.contextPath }/adminOrder?method=findAllByState&state=${orderPage.list[0].state }&currentPage=${orderPage.currentPage+1 }">下一页</a>|
+								<a href="${ pageContext.request.contextPath }/adminOrder?method=findAllByState&state=${orderPage.list[0].state }&currentPage=${orderPage.totalPage }">尾页</a>|
+							</c:if>
 						</td>
 					</tr>
 				</TBODY>

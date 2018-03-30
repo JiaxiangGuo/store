@@ -17,4 +17,8 @@ public interface OrderDao {
 
 	Order getById(String oid) throws Exception;
 
+	List<Order> findAllByState(String state, int currentPage, int pageSize) throws Exception;
+
+	int findTotalCountBystate(String state) throws Exception;
+
 }

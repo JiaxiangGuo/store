@@ -52,5 +52,13 @@ public class OrderServiceImpl implements OrderService {
 		OrderDao od = (OrderDao) new BeanFactory().getBean("OrderDao");
 		return od.getById(oid);
 	}
+	//通过状态查询商品
+	@Override
+	public OrderPage findAllByState(String state, int currentPage, int pageSize) throws Exception {
+		OrderDao od = (OrderDao) new BeanFactory().getBean("OrderDao");
+		List<Order> list = od.findAllByState(state, currentPage, pageSize);
+		int totalCount = od.findTotalCountBystate(state);
+		return new OrderPage(currentPage, pageSize, list, totalCount);
+	}
 
 }

@@ -24,4 +24,9 @@ public class AdminProductServlet extends BaseServlet {
 		request.setAttribute("list", list);
 		return "/admin/product/list.jsp";
 	}
+	public String addUI(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		
+		return "/admin/product/add.jsp";
+	}
+	
 }
