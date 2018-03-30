@@ -137,4 +137,11 @@ public class OrderDaoImpl implements OrderDao {
 		
 	}
 
+	@Override
+	public void updateState(String oid, String state) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "update orders set state=? where oid=?";
+		qr.update(sql, state, oid);
+	}
+
 }

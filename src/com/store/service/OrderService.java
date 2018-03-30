@@ -15,5 +15,7 @@ public interface OrderService {
 
 	OrderPage findAllByState(String state, int currentPage, int pageSize) throws Exception;
 
+	void updateState(String oid, String state) throws Exception;
+
 
 }

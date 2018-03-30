@@ -93,7 +93,7 @@
 													未付款
 												</c:if>
 												<c:if test="${order.state == 1 }">
-													<a href="${ pageContext.request.contextPath }/adminOrder_updateState.action?oid=<s:property value="#o.oid"/>"><font color="blue">发货</font></a>
+													<a href="${ pageContext.request.contextPath }/adminOrder?method=updateState&oid=${order.oid }&state=2"><font color="blue">发货</font></a>
 												</c:if>
 												<c:if test="${order.state == 2 }">
 													等待确认收货

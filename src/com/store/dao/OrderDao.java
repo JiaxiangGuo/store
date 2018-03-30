@@ -21,4 +21,6 @@ public interface OrderDao {
 
 	int findTotalCountBystate(String state) throws Exception;
 
+	void updateState(String oid, String state) throws Exception;
+
 }

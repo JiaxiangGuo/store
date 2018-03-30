@@ -53,4 +53,14 @@ public class AdminOrderServlet extends BaseServlet {
 		
 		return null;
 	}
+	
+	//修改订单状态
+	public String updateState(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String oid = request.getParameter("oid");
+		String state = request.getParameter("state");
+		OrderService os = (OrderService) new BeanFactory().getBean("OrderService");
+		os.updateState(oid, state);
+		response.sendRedirect(request.getContextPath()+"/adminOrder?method=findAllByState&state=1&currentPage=1");
+		return null;
+	}
 }

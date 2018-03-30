@@ -52,7 +52,7 @@
 											<a href="#">查看物流</a>
 										</c:if>
 										<c:if test="${order.state==2 }">
-											<a href="#">确认收货</a>
+											<a href="${pageContext.request.contextPath }/order?method=updateState&oid=${order.oid}&state=3">确认收货</a>
 										</c:if>
 										<c:if test="${order.state==3 }">
 											已完成

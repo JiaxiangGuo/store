@@ -60,5 +60,10 @@ public class OrderServiceImpl implements OrderService {
 		int totalCount = od.findTotalCountBystate(state);
 		return new OrderPage(currentPage, pageSize, list, totalCount);
 	}
+	@Override
+	public void updateState(String oid, String state) throws Exception {
+		OrderDao od = (OrderDao) new BeanFactory().getBean("OrderDao");
+		od.updateState(oid, state);
+	}
 
 }
