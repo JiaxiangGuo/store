@@ -5,55 +5,31 @@
 		<meta http-equiv="Content-Language" content="zh-cn">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link href="${pageContext.request.contextPath}/css/Style1.css" rel="stylesheet" type="text/css" />
-		<script language="javascript" src="${pageContext.request.contextPath}/js/public.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/layer/layer.js"></script>
+		
+		</HEAD>
 		<script type="text/javascript">
 			function showDetail(oid){
-				var but = document.getElementById("but"+oid);
-				var div1 = document.getElementById("div"+oid);
-				if(but.value == "订单详情"){
-					// 1.创建异步对象
-					var xhr = createXmlHttp();
-					// 2.设置监听
-					xhr.onreadystatechange = function(){
-						if(xhr.readyState == 4){
-							if(xhr.status == 200){
-								
-								div1.innerHTML = xhr.responseText;
-							}
-						}
-					}
-					// 3.打开连接
-					xhr.open("GET","${pageContext.request.contextPath}/adminOrder_findOrderItem.action?oid="+oid+"&time="+new Date().getTime(),true);
-					// 4.发送
-					xhr.send(null);
-					but.value = "关闭";
-				}else{
-					div1.innerHTML = "";
-					but.value="订单详情";
-				}
-				
+				//alert(oid);
+				$.post("${pageContext.request.contextPath}/adminOrder",{"method":"getById","oid":oid},function(data){
+					var s="<table width='99%' border='1'><tr><th>商品名称</th><th>购买数量</th></tr>";
+					$(data).each(function(){
+						s+=("<tr><td>"+this.product.pname+"</td><td>"+this.count+"</td></tr>");
+					});
+					s+="</table>";
+					
+					layer.open({
+						 type: 1,//0:信息框; 1:页面; 2:iframe层;	3:加载层;	4:tip层
+					     title:"订单详情",//标题
+					     area: ['450px', '300px'],//大小
+					     shadeClose: true, //点击弹层外区域 遮罩关闭
+					     content: s//内容
+					});
+				},"json");
 			}
-			function createXmlHttp(){
-				   var xmlHttp;
-				   try{ // Firefox, Opera 8.0+, Safari
-				        xmlHttp=new XMLHttpRequest();
-				    }
-				    catch (e){
-					   try{// Internet Explorer
-					         xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
-					      }
-					    catch (e){
-					      try{
-					         xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
-					      }
-					      catch (e){}
-					      }
-				    }
-
-					return xmlHttp;
-				 }
 		</script>
-	</HEAD>
+	
 	<body>
 		<br>
 		<form id="Form1" name="Form1" action="${pageContext.request.contextPath}/user/list.jsp" method="post">
@@ -128,12 +104,8 @@
 											
 											</td>
 											<td align="center" style="HEIGHT: 22px">
-												<input type="button" value="订单详情" id="but${order.oid }" onclick="showDetail(${order.oid })"/>
-												<div id="div${order.oid }">
-													
-												</div>
+												<input type="button" value="订单详情" onclick="showDetail('${order.oid }')"/>
 											</td>
-							
 										</tr>
 									</c:forEach>	
 							</table>

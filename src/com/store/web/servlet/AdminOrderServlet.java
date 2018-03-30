@@ -8,11 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.store.utils.BeanFactory;
+import com.store.utils.JsonUtil;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
+
 import com.store.domain.Order;
+import com.store.domain.OrderItem;
 import com.store.domain.OrderPage;
 import com.store.service.OrderService;
 /**
- * Servlet implementation class AdminOrderServlet
+ * 后台管理订单相关
  */
 public class AdminOrderServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
@@ -30,5 +36,21 @@ public class AdminOrderServlet extends BaseServlet {
 		
 		request.setAttribute("orderPage", orderPage);
 		return "/admin/order/list.jsp";
+	}
+	//查询订单详情
+	public String getById(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		response.setContentType("text/html;charset=utf-8");
+		String oid = request.getParameter("oid");
+		OrderService os = (OrderService) new BeanFactory().getBean("OrderService");
+		Order order = os.getById(oid);
+		List<OrderItem> list = order.getItems();
+		//将list封装成json
+		
+		JsonConfig config = JsonUtil.configJson(new String[] {"class", "itemid", "order"});//除去不想封装字段
+		JSONArray listJson = JSONArray.fromObject(list, config);
+		
+		response.getWriter().println(listJson);
+		
+		return null;
 	}
 }
